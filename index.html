@@ -194,9 +194,7 @@
             var data = {};
             data['Number of daveners'] = numDaveners;
             for (i = 0; i < numDaveners; i++) {
-                data['Davener #' + (i+1)] = $('input[name="name' + i + '"]').first().val() + "; " + 
-                    $('#maleButton' + i).prop("checked") ? "male" : "female" + 
-
+                data['Davener #' + (i+1)] = getDavenerText(i);
             }
             sendEmail("https://public.herotofu.com/v1/4b2f5a60-45d1-11ee-afc4-2f612dbc7441", data, onSuccess, onError);
 
