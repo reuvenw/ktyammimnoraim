@@ -15,6 +15,7 @@
 
             h3 {
                 margin-block-end: 0em;
+                color: green;
             }
             h3 ~ p:first-of-type {
                 margin-top: 0.2em;
@@ -28,6 +29,24 @@
                 padding-right: 1em;
                 height: 4.3em;
                 float: left;
+            }
+            .name, .gender, .type, .age {
+                margin-right: 1em;
+            }
+            #davenerX {
+                visibility: hidden;
+            }
+
+            .gone {
+                display: none;
+            }
+
+            input.error, select.error {
+                border: 1px solid red;
+            }
+
+            label.error {
+                color: red;
             }
 
         </style>
@@ -84,11 +103,313 @@
         <li>Check made out to Kapot Temarim</li>
         </ul>
     </div>
+    <div>
         <p>Thank you in advance for your prompt attention to this matter. </p>
         
         <p>Vaad Menahel of Kapot Temarim & the Gabbaim</p>
-        <br/>
-        <p>Seating Requests for Yamin Noraim, please add <strong>names</strong> in the appropriate box:</p>
+    </div>
+
+    <div>
+        <h3>Seating Requests for Yamin Noraim</h3>
         
+        <p>Number of daveners: 
+            <select id="numDaveners" name="number">
+                <option value="-1">-</option>
+            </select>
+        </p>
+        <div id="daveners">
+
+        </div>
+        <div>
+            <button id="submitButton" type="submit" class="gone">Submit</button>
+        </div>
+        <div id="davenerX">
+            <p>Davener X</p>
+            <p>
+                <input class="name" type="text" placeholder="Name" name="nameX"/>
+                <span class="gender">
+                    <!-- Gender:  -->
+                    <input id="maleButtonX" type="radio" name="genderX" value="male"></input>
+                    <label id="maleLabelX" for="maleButtonX">Male</label>
+                    <input id="femaleButtonX" type="radio" name="genderX" value="female"></input>
+                    <label id="femaleLabelX" for="femaleButtonX">Female</label>
+                </span>
+                <span class="type">
+                    <!-- Type:  -->
+                    <select name="typeX">
+                        <option value="-">Type</option>
+                        <option value="member">Member</option>
+                        <option value="youngKid">Child under grade 5</option>
+                        <option value="oldKid">Unmarried child - grade 5+</option>
+                        <option value="guest">Married child / guest</option>
+                    </select>
+                </span>
+                <input class="age, gone" type="number" placeholder="Age" name="ageX"/>
+                <span class="days">
+                    <input id="roshHashanahX" type="checkbox" name="roshHaShanahX"></input>
+                    <label id="roshHaShanahLabelX" for="roshHaShanahX">Rosh HaShanah</label>
+                    <input id="yomKippurX" type="checkbox" name="yomKippurX"></input>
+                    <label id="yomKippurLabelX" for="yomKippurX">Yom Kippur</label>
+                </span>
+            </p>
+        </div>
+    </div>
     </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+
+        const maxNumDaveners = 20;
+        var numDaveners = 0;
+        var submitAttempted = false;
+        // TODO - add name, email address
+        // TODO - grade instead of age?
+        // TODO - calculate total due
+        // TODO - include membership in calculation?
+        // TODO - email
+        //          TO
+        //          Summary
+
+        $( document ).ready(function() {
+            for (i = 0; i < maxNumDaveners; i++) {
+                $('#numDaveners').append($('<option>', {
+                    value: i + 1,
+                    text: i + 1
+                }));
+            }
+
+            $('#numDaveners').on('change', function() {
+                updateDaveners(this.value);
+            });
+
+            $('#submitButton').on('click', function() {
+                submitAttempted = true;
+                if (validate()) {
+                    submit();
+                }
+            });
+        });
+
+        function submit() {
+            var data = {};
+            data['Number of daveners'] = numDaveners;
+            for (i = 0; i < numDaveners; i++) {
+                data['Davener #' + (i+1)] = $('input[name="name' + i + '"]').first().val() + "; " + 
+                    $('#maleButton' + i).prop("checked") ? "male" : "female" + 
+
+            }
+            sendEmail("https://public.herotofu.com/v1/4b2f5a60-45d1-11ee-afc4-2f612dbc7441", data, onSuccess, onError);
+
+        }
+
+        function getDavenerText(number) {
+            var text = $('input[name="name' + number + '"]').first().val() + "; " +
+                ($('#maleButton' + number).prop("checked") ? "male" : "female") + "; ";
+
+                const typeInput = davener.find('select[name="type' + number + '"]').first();
+                var type = "-";
+                switch (typeInput.val()) {
+                    case "member":
+                        type = "Member";
+                        break;
+                    case "youngKid":
+                        type = "Child under grade 5";
+                        break;
+                    case "oldKid":
+                        type = "Unmarried child - grade 5+";
+                        break;
+                    case "guest":
+                        type = "Married child / guest";
+                        break;
+                    default:
+                        break;
+                }
+
+            text += type + "; ";
+        }
+
+        var onSuccess = function(response) {
+            alert("Form successfully submitted!\nPlease visit the JGive link to complete your reservation by paying any amounts due.");
+            console.log(response);
+        };
+
+        var onError = function(err) {
+            alert("Error submitting form");
+            console.error(err);
+        };
+
+        function sendEmail(endpointUrl, data, onSuccess, onError) {
+            $.ajax({
+                type: "POST",
+                url: endpointUrl,
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: onSuccess,
+                error: function(xhr, status) {
+                    if (typeof this.statusCode[xhr.status] !== 'undefined') {
+                        return false;
+                    }
+
+                    onError(err);
+                },
+                statusCode: {
+                    // Endpoint thinks that it's likely a spam/bot request, you need to change "spam protection mode" to "never" in HeroTofu forms
+                    422: function(response) {
+                    alert("Cannot send request, are you robot?");
+                    },
+                }
+            });
+        }
+
+        function updateDaveners(newValue) {
+            const oldNumDaveners = parseInt(numDaveners);
+            const newNumDaveners = parseInt(newValue);
+            numDaveners = newNumDaveners;
+            
+            if (newNumDaveners > oldNumDaveners) {
+                for (i = oldNumDaveners; i < newNumDaveners; i++) {
+                    const davenerX = $('#davenerX').clone();
+                    adjustIdsAndNames(davenerX, i);
+                    davenerX.appendTo('#daveners');
+                }
+            } else if (newNumDaveners < oldNumDaveners) {
+                for (i = oldNumDaveners - 1; i >= newNumDaveners; i--) {
+                    $('#davener' + i).remove();
+                }
+            }
+
+            if (newNumDaveners > 0) {
+                $('#submitButton').removeClass('gone');
+            } else {
+                $('#submitButton').addClass('gone');
+            }
+        }
+
+        function adjustIdsAndNames(davener, number) {
+            davener.find('p')[0].innerText = "Davener " + (parseInt(number) + 1);
+
+            davener.find('input[name="nameX"]').on('change', function() {
+                validate();
+            });
+
+            davener.find('#maleButtonX').on('change', function() {
+                validate();
+            });
+
+            davener.find('#femaleButtonX').on('change', function() {
+                validate();
+            });
+
+            davener.find('select[name="typeX"]').on('change', function() {
+                validate();
+            });
+
+            davener.find('input[name="ageX"]').on('change', function() {
+                validate();
+            });
+
+            davener.find('#roshHaShanahX').on('change', function() {
+                validate();
+            });
+
+            davener.find('#yomKippurX').on('change', function() {
+                validate();
+            });
+
+            davener.attr('id', 'davener' + number);
+            davener.find('input[name="nameX"]').attr('name', 'name' + number);
+            davener.find('input[name="genderX"]').attr('name', 'gender' + number);
+            davener.find('#maleLabelX').attr('for', 'maleButton' + number);
+            davener.find('#femaleLabelX').attr('for', 'femaleButton' + number);
+            davener.find('#maleButtonX').attr('id', 'maleButton' + number);
+            davener.find('#maleLabelX').attr('id', 'maleLabel' + number);
+            davener.find('#femaleButtonX').attr('id', 'femaleButton' + number);
+            davener.find('#femaleLabelX').attr('id', 'femaleLabel' + number);
+            davener.find('select[name="typeX"]').attr('name', 'type' + number);
+            davener.find('input[name="ageX"]').attr('name', 'age' + number);
+            davener.find('input[name="roshHaShanahX"]').attr('name', 'roshHaShanah' + number);
+            davener.find('input[name="yomKippurX"]').attr('name', 'yomKippur' + number);
+            davener.find('#roshHaShanahX').attr('id', 'roshHaShanah' + number);
+            davener.find('#yomKippurX').attr('id', 'yomKippur' + number);
+            davener.find('#roshHaShanahLabelX').attr('for', 'roshHaShanah' + number);
+            davener.find('#yomKippurLabelX').attr('for', 'yomKippur' + number);
+            davener.find('#roshHaShanahLabelX').attr('id', 'roshHaShanahLabel' + number);
+            davener.find('#yomKippurLabelX').attr('id', 'yomKippurLabel' + number);
+        }
+
+        function validate() {
+            var valid = true;
+
+            for (i = 0; i < numDaveners; i++) {
+                const davener = $('#davener' + i);
+
+                const nameInput = davener.find('input[name="name' + i + '"]').first();
+                if (!nameInput.val().trim()) {
+                    valid = false;
+                    if (submitAttempted) {
+                        nameInput.addClass('error');
+                    }
+                } else {
+                    nameInput.removeClass('error');
+                }
+
+                const male = davener.find('#maleButton' + i);
+                const female = davener.find('#femaleButton' + i);
+                if (!male.prop("checked") && !female.prop("checked")) {
+                    valid = false;
+                    if (submitAttempted) {
+                        davener.find('#maleLabel' + i).addClass('error');
+                        davener.find('#femaleLabel' + i).addClass('error');
+                    }
+                } else {
+                    davener.find('#maleLabel' + i).removeClass('error');
+                    davener.find('#femaleLabel' + i).removeClass('error');
+                }
+
+                const typeInput = davener.find('select[name="type' + i + '"]').first();
+                if (typeInput.val() == "-") {
+                    valid = false;
+                    if (submitAttempted) {
+                        typeInput.addClass('error');
+                    }
+                } else {
+                    typeInput.removeClass('error');
+                }
+
+                const ageInput = davener.find('input[name="age' + i + '"]');
+                if (typeInput.val() == "youngKid") {
+                    ageInput.removeClass('gone');                    
+                    if (!ageInput.val().trim() || ageInput.val() <= 0) {
+                        valid = false;
+                        if (submitAttempted) {
+                            ageInput.addClass('error');
+                        }
+                    } else {
+                        ageInput.removeClass('error');
+                    }
+
+                } else {
+                    ageInput.addClass('gone');
+                }
+
+                const roshHaShanah = davener.find('#roshHaShanah' + i);
+                const yomKippur = davener.find('#yomKippur' + i);
+                if (!roshHaShanah.prop("checked") && !yomKippur.prop("checked")) {
+                    valid = false;
+                    if (submitAttempted) {
+                        davener.find('#roshHaShanahLabel' + i).addClass('error');
+                        davener.find('#yomKippurLabel' + i).addClass('error');
+                    }
+                } else {
+                    davener.find('#roshHaShanahLabel' + i).removeClass('error');
+                    davener.find('#yomKippurLabel' + i).removeClass('error');
+                }
+            }
+
+            return valid;
+        }
+
+    </script>
+
 </html>
