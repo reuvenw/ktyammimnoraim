@@ -18,10 +18,10 @@
                 margin-block-end: 0em;
                 color: green;
             }
-            h3 ~ p:first-of-type, .davenerInput, .name, .email {
+            h3 ~ p:first-of-type, .davenerInput, .name, .email, .totalsTitle ~ p:first-of-type {
                 margin-top: 0.2em;
             }
-            .davenerTitle, .nameTitle, .emailTitle {
+            .davenerTitle, .nameTitle, .emailTitle, .memberTitle, .numDavenersTitle, .totalsTitle {
                 margin-bottom: 0em;
                 font-weight: bold;
                 font-size: small;
@@ -38,11 +38,14 @@
             }
             .name, .gender, .type, .grade, .days {
                 margin-right: 1em;
-                margin-bottom: 5em;
                 white-space: nowrap;
             }
             #davenerX {
                 visibility: hidden;
+            }
+
+            #submitButton {
+                margin-top: 1em;
             }
 
             .gone {
@@ -55,6 +58,11 @@
 
             label.error {
                 color: red;
+            }
+
+            .due {
+                font-size: smaller;
+                font-weight: bold;
             }
 
         </style>
@@ -124,21 +132,38 @@
         <h3>Seating Requests for Yammim Noraim</h3>
         
         <p class="nameTitle">Name</p>
-        <input id="name" class="name" type="text" name="name"/>
+        <input id="name" class="name0" type="text" name="name"/>
  
         <p class="emailTitle">Email</p>
         <input id="email" class="email" type="text" name="email"/>
  
-        <p>Number of daveners: 
-            <select id="numDaveners" name="number">
-                <option value="-1">-</option>
-            </select>
-        </p>
+        <p class="memberTitle">Membership status</p>
+        <select id="membership" name="membership">
+            <option value="-">-</option>
+            <option value="fullMember">Previously paid building fund; paying annual membership</option>
+            <option value="becomingFullMember">Did not yet pay building fund but would like to now, along with annual membership</option>
+            <option value="partialMember">Will pay annual membership this year, not building fund</option>
+            <option value="notAMember">Not yet a member</option>
+        </select>
+        
+        
+        <p class="numDavenersTitle">Number of daveners</p>
+        <select id="numDaveners" name="number">
+            <option value="-1">-</option>
+        </select>
+
         <div id="daveners">
 
         </div>
-        <div>
-            <button id="submitButton" type="submit" class="gone">Submit</button>
+        <div id="summary" class="gone">
+            <h3>Total amounts due</h3>
+            <p>Please pay each sum at the appropriate link.</p>
+            <ul>
+                <li><a href="https://www.jgive.com/new/en/ils/donation-targets/103157" target="_blank">Membership</a>: <span id="membershipDue">0</span>&#8362;</li>
+                <li><a href="https://www.jgive.com/new/en/ils/donation-targets/103156" target="_blank">Building fund</a>: <span id="buildingFundDue">0</span>&#8362;</li>
+                <li><a href="https://www.jgive.com/new/en/ils/collect/donation-targets/103135/amount" target="_blank">Seats</a>: <span id="seatsDue">0</span>&#8362;</li>
+            </ul>
+            <button id="submitButton" type="submit">Submit</button>
         </div>
         <div id="davenerX">
             <p class="davenerTitle">Davener X</p>
@@ -155,11 +180,11 @@
                         <option value="-">Type</option>
                         <option value="member">Member</option>
                         <option value="youngKid">Child under grade 5</option>
-                        <option value="oldKid">Unmarried child - grade 5+</option>
+                        <option value="oldKid">Child - grade 5+</option>
                         <option value="guest">Married child / guest</option>
                     </select>
                 </span>
-                <select name="gradeX" class="grade, gone">
+                <select name="gradeX" class="grade gone">
                     <option value="-">Grade</option>
                     <option value="gan">Gan</option>
                     <option value="1">1st</option>
@@ -167,11 +192,15 @@
                     <option value="3">3rd</option>
                     <option value="3">4th</option>
                 </select>
-            <span class="days">
+                <span class="days">
                     <input id="roshHaShanahX" type="checkbox" name="roshHaShanahX"></input>
                     <label id="roshHaShanahLabelX" for="roshHaShanahX">Rosh HaShanah</label>
                     <input id="yomKippurX" type="checkbox" name="yomKippurX"></input>
                     <label id="yomKippurLabelX" for="yomKippurX">Yom Kippur</label>
+                </span>
+                <span id="dueX" class="gone due">
+                    Due:
+                    <span id="dueAmountX"></span>
                 </span>
             </p>
         </div>
@@ -184,14 +213,21 @@
         const maxNumDaveners = 20;
         var numDaveners = 0;
         var submitAttempted = false;
-        // Membership question
+
+        const membershipFull = 800;
+        const membershipPartial = 1100;
+        const buildingFund = 3600;
+        const seatOne = 100;
+        const seatTwo = 150;
+        // TODO
+        // Calculate totals due
+        // Email
+        //          Summary
+        //          Total
+        // Prevent double-submit
         // iPhone submit
         // iPhone spacing
-        // TODO - calculate total due
-        // TODO - email
-        //          Total
-        //          Summary
-        // Prevent double-submit
+        // Get rid of number at top
         
         $( document ).ready(function() {
             for (i = 0; i < maxNumDaveners; i++) {
@@ -217,6 +253,22 @@
             var data = {};
             data['Name'] = $('#name').first().val();
             data['Email'] = $('#email').first().val();
+
+            switch ($('#membership').val()) {
+                case "fullMember":
+                    data['Membership'] = "Previously paid building fund; paying annual membership";
+                    break;
+                case "becomingFullMember":
+                    data['Membership'] = "Did not yet pay building fund but would like to now, along with annual membership";
+                    break;
+                case "partialMember":
+                    data['Membership'] = "Will pay annual membership this year, not building fund";
+                    break;
+                case "notAMember":
+                    data['Membership'] = "Not yet a member";
+                    break;
+            }
+
             data['Number of daveners'] = numDaveners;
             for (i = 0; i < numDaveners; i++) {
                 console.log("DAVENER " + i)
@@ -260,7 +312,7 @@
                     type += ")";
                     break;
                 case "oldKid":
-                    type = "Unmarried child - grade 5+";
+                    type = "Child - grade 5+";
                     break;
                 case "guest":
                     type = "Married child / guest";
@@ -285,7 +337,7 @@
         }
 
         var onSuccess = function(response) {
-            alert("Form successfully submitted!\nPlease visit the JGive link to complete your reservation by paying any amounts due.");
+            alert("Form successfully submitted!\nIf you have not already done so, please visit the JGive links to complete your reservation by paying any amounts due.");
             console.log(response);
         };
 
@@ -336,9 +388,9 @@
             }
 
             if (newNumDaveners > 0) {
-                $('#submitButton').removeClass('gone');
+                $('#summary').removeClass('gone');
             } else {
-                $('#submitButton').addClass('gone');
+                $('#summary').addClass('gone');
             }
         }
 
@@ -350,6 +402,14 @@
             });
 
             $('#email').on('change', function() {
+                validate();
+            });
+
+            $('#membership').on('change', function() {
+                validate();
+            });
+
+            $('#numDaveners').on('change', function() {
                 validate();
             });
 
@@ -400,6 +460,8 @@
             davener.find('#yomKippurLabelX').attr('for', 'yomKippur' + number);
             davener.find('#roshHaShanahLabelX').attr('id', 'roshHaShanahLabel' + number);
             davener.find('#yomKippurLabelX').attr('id', 'yomKippurLabel' + number);
+            davener.find('#dueX').attr('id', 'due' + number);
+            davener.find('#dueAmountX').attr('id', 'dueAmount' + number);
         }
 
         function validate() {
@@ -425,6 +487,17 @@
                 emailInput.removeClass('error');
             }
 
+            const membershipInput = $('#membership').first();
+            if (membershipInput.val() == "-") {
+                valid = false;
+                if (submitAttempted) {
+                    membershipInput.addClass('error');
+                }
+            } else {
+                membershipInput.removeClass('error');
+            }
+
+            var seatTotal = 0;
 
             for (i = 0; i < numDaveners; i++) {
                 const davener = $('#davener' + i);
@@ -490,7 +563,46 @@
                     davener.find('#roshHaShanahLabel' + i).removeClass('error');
                     davener.find('#yomKippurLabel' + i).removeClass('error');
                 }
+
+                $('#due' + i).addClass('gone');
+                console.log(typeInput.val());
+                if (typeInput.val() == "guest") {
+                    console.log("HERE")
+                    if (roshHaShanah.prop("checked") && yomKippur.prop("checked")) {
+                        seatTotal += seatTwo;
+                        $('#dueAmount' + i).html(seatTwo + "&#8362;");
+                        $('#due' + i).removeClass('gone');
+                    } else if (roshHaShanah.prop("checked") || yomKippur.prop("checked")) {
+                        seatTotal += seatOne;
+                        $('#dueAmount' + i).html(seatOne + "&#8362;");
+                        $('#due' + i).removeClass('gone');
+                    }
+                }
+
             }
+
+            switch (membershipInput.val()) {
+                case "fullMember":
+                case "becomingFullMember":
+                    $('#membershipDue').text(membershipFull);
+                    break;
+                case "partialMember":
+                    $('#membershipDue').text(membershipPartial);
+                    break;
+                default:
+                    $('#membershipDue').text(0);
+                    break;
+            }
+            switch (membershipInput.val()) {
+                case "becomingFullMember":
+                    $('#buildingFundDue').text(buildingFund);
+                    break;
+                default:
+                    $('#buildingFundDue').text(0);
+                    break;
+            }
+            $('#seatsDue').text(seatTotal);
+
 
             return valid;
         }
