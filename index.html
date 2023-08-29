@@ -230,7 +230,6 @@
         // Email - Summary
         // Prevent double-submit
         // iPhone submit
-        // iPhone spacing
         // Get rid of number at top
         
         $( document ).ready(function() {
@@ -354,10 +353,12 @@
 
         var onError = function(err) {
             alert("Error submitting form");
+            $("#submitButton"). attr("disabled", false);
             console.error(err);
         };
 
         function sendEmail(endpointUrl, data, onSuccess, onError) {
+            $("#submitButton"). attr("disabled", true);
             $.ajax({
                 type: "POST",
                 url: endpointUrl,
