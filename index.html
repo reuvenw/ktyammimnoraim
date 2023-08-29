@@ -17,8 +17,12 @@
                 margin-block-end: 0em;
                 color: green;
             }
-            h3 ~ p:first-of-type {
+            h3 ~ p:first-of-type, .davenerInput, .name, .email {
                 margin-top: 0.2em;
+            }
+            .davenerTitle, .nameTitle, .emailTitle {
+                margin-bottom: 0em;
+                font-weight: bold;
             }
 
             #logo {
@@ -30,8 +34,9 @@
                 height: 4.3em;
                 float: left;
             }
-            .name, .gender, .type, .age {
+            .name, .gender, .type, .age, .days {
                 margin-right: 1em;
+                white-space: nowrap;
             }
             #davenerX {
                 visibility: hidden;
@@ -50,7 +55,8 @@
             }
 
         </style>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
 
@@ -113,6 +119,12 @@
     <div>
         <h3>Seating Requests for Yamin Noraim</h3>
         
+        <p class="nameTitle">Name</p>
+        <input id="name" class="name" type="text" name="name"/>
+ 
+        <p class="emailTitle">Email</p>
+        <input id="email" class="email" type="text" name="email"/>
+ 
         <p>Number of daveners: 
             <select id="numDaveners" name="number">
                 <option value="-1">-</option>
@@ -125,8 +137,8 @@
             <button id="submitButton" type="submit" class="gone">Submit</button>
         </div>
         <div id="davenerX">
-            <p>Davener X</p>
-            <p>
+            <p class="davenerTitle">Davener X</p>
+            <p class="davenerInput">
                 <input class="name" type="text" placeholder="Name" name="nameX"/>
                 <span class="gender">
                     <!-- Gender:  -->
@@ -163,16 +175,15 @@
         const maxNumDaveners = 20;
         var numDaveners = 0;
         var submitAttempted = false;
-        // TODO - add name, email address
-        // TODO - grade instead of age?
         // TODO - calculate total due
-        // TODO - mobile
-            // Viewport
-            // Line breaks
-        // TODO - include membership in calculation?
+        // TODO - mobile Viewport
         // TODO - email
         //          TO
         //          Summary
+        // Prevent double-submit
+        
+        // TODO - include membership in calculation?
+        // TODO - grade instead of age?
 
         $( document ).ready(function() {
             for (i = 0; i < maxNumDaveners; i++) {
@@ -291,6 +302,14 @@
         function adjustIdsAndNames(davener, number) {
             davener.find('p')[0].innerText = "Davener " + (parseInt(number) + 1);
 
+            $('#name').on('change', function() {
+                validate();
+            });
+
+            $('#email').on('change', function() {
+                validate();
+            });
+
             davener.find('input[name="nameX"]').on('change', function() {
                 validate();
             });
@@ -342,6 +361,27 @@
 
         function validate() {
             var valid = true;
+
+            const nameInput0 = $('#name').first();
+            if (!nameInput0.val().trim()) {
+                valid = false;
+                if (submitAttempted) {
+                    nameInput0.addClass('error');
+                }
+            } else {
+                nameInput0.removeClass('error');
+            }
+
+            const emailInput = $('#email').first();
+            if (!emailInput.val().trim()) {
+                valid = false;
+                if (submitAttempted) {
+                    emailInput.addClass('error');
+                }
+            } else {
+                emailInput.removeClass('error');
+            }
+
 
             for (i = 0; i < numDaveners; i++) {
                 const davener = $('#davener' + i);
