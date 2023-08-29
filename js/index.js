@@ -82,7 +82,29 @@ function localize(locale) {
     for (const [key, value] of Object.entries(localizations[locale])) {
         $('#' + key).html(value)
     }
-    $("#nameX").attr('placeholder', localizations[locale]['name']);
+
+    const daveners = $("#daveners");
+    daveners.find('span[id="davenerTitleStart"]').html(localizations[locale]['davenerTitleStart'])
+    daveners.find('input[class="name davenerWidget"]').attr('placeholder', localizations[locale]['name']);
+
+    daveners.find('label[class="maleLabel"]').html(localizations[locale]['maleLabelX']);
+    daveners.find('label[class="femaleLabel"]').html(localizations[locale]['femaleLabelX']);
+
+    daveners.find('option[id="optionType"]').html(localizations[locale]['optionType']);
+    daveners.find('option[id="optionMember"]').html(localizations[locale]['optionMember']);
+    daveners.find('option[id="optionYoungKid"]').html(localizations[locale]['optionYoungKid']);
+    daveners.find('option[id="optionOldKid"]').html(localizations[locale]['optionOldKid']);
+    daveners.find('option[id="optionGuest"]').html(localizations[locale]['optionGuest']);
+
+    daveners.find('option[id="optionGrade"]').html(localizations[locale]['optionGrade']);
+    daveners.find('option[id="optionGan"]').html(localizations[locale]['optionGan']);
+    daveners.find('option[id="optionFirst"]').html(localizations[locale]['optionFirst']);
+    daveners.find('option[id="optionSecond"]').html(localizations[locale]['optionSecond']);
+    daveners.find('option[id="optionThird"]').html(localizations[locale]['optionThird']);
+    daveners.find('option[id="optionFourth"]').html(localizations[locale]['optionFourth']);
+
+    daveners.find('label[class="roshHaShanahLabel"]').html(localizations[locale]['roshHaShanahLabelX']);
+    daveners.find('label[class="yomKippurLabel"]').html(localizations[locale]['yomKippurLabelX']);
 }
 
 function submit() {
@@ -182,9 +204,7 @@ function getDavenerText(number) {
         seatSummary["yk"][male ? "men" : "women"] = seatSummary["yk"][male ? "men" : "women"] + 1
         text += "Both"
     } else if (roshHaShanah.prop("checked")) {
-        console.log("A: " + seatSummary["rh"][male ? "men" : "women"])
         seatSummary["rh"][male ? "men" : "women"] = seatSummary["rh"][male ? "men" : "women"] + 1
-        console.log("B: " + seatSummary["rh"][male ? "men" : "women"])
         text += "Rosh HaShanah"
     } else if (yomKippur.prop("checked")) {
         seatSummary["yk"][male ? "men" : "women"] = seatSummary["yk"][male ? "men" : "women"] + 1
