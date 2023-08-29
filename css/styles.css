@@ -36,8 +36,9 @@ h3~p:first-of-type,
     /* top: 40px;
                 right: 40px; */
     left: 0px;
-    padding-right: 1em;
+    right: 0px;
     height: 4.3em;
+    padding-right: 1em;
     float: left;
 }
 

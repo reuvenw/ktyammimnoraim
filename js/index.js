@@ -36,11 +36,41 @@ $( document ).ready(function() {
         }
     });
 
+    stashEnglish();
+
     $('#he').on('click', function() {
         $("html").children().css("direction","rtl");
+
+        $('#logo').css('padding-right', '0em');
+        $('#logo').css('padding-left', '1em');
+        $('#logo').css('float', 'right');
+
+        $('#locale').css('float', 'left');
+
         localize("he");
     });
+
+    $('#en').on('click', function() {
+        $("html").children().css("direction","ltr");
+
+        $('#logo').css('padding-right', '1em');
+        $('#logo').css('padding-left', '0em');
+        $('#logo').css('float', 'left');
+
+        $('#locale').css('float', 'right');
+
+        localize("en");
+    });
 });
+
+function stashEnglish() {
+    localizations["en"] = [];
+    for (const [key, value] of Object.entries(localizations["he"])) {
+        localizations["en"][key] = $('#' + key).html()
+    }
+    localizations["en"]['name'] = "Name"
+
+}
 
 function localize(locale) {
     for (const [key, value] of Object.entries(localizations[locale])) {
