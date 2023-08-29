@@ -36,8 +36,9 @@
                 height: 4.3em;
                 float: left;
             }
-            .name, .gender, .type, .age, .days {
+            .name, .gender, .type, .grade, .days {
                 margin-right: 1em;
+                margin-bottom: 1em;
                 white-space: nowrap;
             }
             #davenerX {
@@ -64,6 +65,7 @@
 
         <img src="images/logo.png" id="logo">
         <h3 class="heading">
+            1<br/>
             Kapot Temarim<br/>
             HaZiporen 5, Efrat<br/>
             Elul 5783
@@ -157,8 +159,15 @@
                         <option value="guest">Married child / guest</option>
                     </select>
                 </span>
-                <input class="age, gone" type="number" placeholder="Age" name="ageX"/>
-                <span class="days">
+                <select name="gradeX" class="grade, gone">
+                    <option value="-">Grade</option>
+                    <option value="gan">Gan</option>
+                    <option value="1">1st</option>
+                    <option value="2">2nd</option>
+                    <option value="3">3rd</option>
+                    <option value="3">4th</option>
+                </select>
+            <span class="days">
                     <input id="roshHaShanahX" type="checkbox" name="roshHaShanahX"></input>
                     <label id="roshHaShanahLabelX" for="roshHaShanahX">Rosh HaShanah</label>
                     <input id="yomKippurX" type="checkbox" name="yomKippurX"></input>
@@ -176,7 +185,6 @@
         var numDaveners = 0;
         var submitAttempted = false;
         // Membership question
-        // Grade
         // iPhone submit
         // iPhone spacing
         // TODO - calculate total due
@@ -229,7 +237,27 @@
                     type = "Member";
                     break;
                 case "youngKid":
-                    type = "Child under grade 5 (" + $('input[name="age' + number + '"]').val() + ")";
+                    type = "Child under grade 5 (";
+                    
+                    switch ($('select[name="grade' + number + '"]').val()) {
+                        case "gan":
+                            type += "Gan";
+                            break;
+                        case "1":
+                            type += "1st";
+                            break;
+                        case "2":
+                            type += "2nd";
+                            break;
+                        case "3":
+                            type += "3rd";
+                            break;
+                        case "4":
+                            type += "4th";
+                            break;
+                    }
+                    
+                    type += ")";
                     break;
                 case "oldKid":
                     type = "Unmarried child - grade 5+";
@@ -341,7 +369,7 @@
                 validate();
             });
 
-            davener.find('input[name="ageX"]').on('change', function() {
+            davener.find('select[name="gradeX"]').on('change', function() {
                 validate();
             });
 
@@ -363,7 +391,7 @@
             davener.find('#femaleButtonX').attr('id', 'femaleButton' + number);
             davener.find('#femaleLabelX').attr('id', 'femaleLabel' + number);
             davener.find('select[name="typeX"]').attr('name', 'type' + number);
-            davener.find('input[name="ageX"]').attr('name', 'age' + number);
+            davener.find('select[name="gradeX"]').attr('name', 'grade' + number);
             davener.find('input[name="roshHaShanahX"]').attr('name', 'roshHaShanah' + number);
             davener.find('input[name="yomKippurX"]').attr('name', 'yomKippur' + number);
             davener.find('#roshHaShanahX').attr('id', 'roshHaShanah' + number);
@@ -434,20 +462,20 @@
                     typeInput.removeClass('error');
                 }
 
-                const ageInput = davener.find('input[name="age' + i + '"]');
+                const gradeInput = davener.find('select[name="grade' + i + '"]');
                 if (typeInput.val() == "youngKid") {
-                    ageInput.removeClass('gone');                    
-                    if (!ageInput.val().trim() || ageInput.val() <= 0) {
+                    gradeInput.removeClass('gone');                    
+                    if (gradeInput.val() == "-") {
                         valid = false;
                         if (submitAttempted) {
-                            ageInput.addClass('error');
+                            gradeInput.addClass('error');
                         }
                     } else {
-                        ageInput.removeClass('error');
+                        gradeInput.removeClass('error');
                     }
 
                 } else {
-                    ageInput.addClass('gone');
+                    gradeInput.addClass('gone');
                 }
 
                 const roshHaShanah = davener.find('#roshHaShanah' + i);
