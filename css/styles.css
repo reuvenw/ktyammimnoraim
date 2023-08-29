@@ -56,10 +56,8 @@ h3~p:first-of-type,
     margin-right: 1em;
 }
 
-.davener
-
 #davenerX {
-    visibility: hidden;
+    display: none;
 }
 
 #submitButton {
