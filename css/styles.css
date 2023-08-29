@@ -47,11 +47,16 @@ h3~p:first-of-type,
 .type,
 .grade,
 .days {
-    margin-right: 1em;
     margin-bottom: 0.5em;
     display: inline-block;
     white-space: nowrap;
 }
+
+.davenerWidget {
+    margin-right: 1em;
+}
+
+.davener
 
 #davenerX {
     visibility: hidden;

@@ -47,6 +47,9 @@ $( document ).ready(function() {
 
         $('#locale').css('float', 'left');
 
+        $('.davenerWidget').css('margin-right', '0em');
+        $('.davenerWidget').css('margin-left', '1em');
+
         localize("he");
     });
 
@@ -58,6 +61,9 @@ $( document ).ready(function() {
         $('#logo').css('float', 'left');
 
         $('#locale').css('float', 'right');
+
+        $('.davenerWidget').css('margin-right', '1em');
+        $('.davenerWidget').css('margin-left', '0em');
 
         localize("en");
     });

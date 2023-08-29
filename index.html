@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
     <!-- TODO 
-    Back to English
     500 or 600?
     Written form attached here
     Change language after selecting number
@@ -20,7 +19,7 @@
         <h3 class="heading">
             <span id="kapot">Beit Knesset Kapot Temarim</span><br/>
             <span id="address">HaZiporen 5, Efrat</span><br/>
-            <span id="date">Elul 5783</span>
+            <span id="date">Elul, 5783</span>
         </h3>
         <p id="locale"><a id="en" href="#">English</a> | <a id="he" href="#">עברית</a></p>
 
@@ -120,14 +119,14 @@
         <div id="davenerX">
             <p id="davenerTitle"><span id="davenerTitleStart">Davener #</span><span id="davenerNumber">X</span></p>
             <p class="davenerInput">
-                <input class="name" type="text" placeholder="Name" name="nameX" id="nameX"/>
-                <span class="gender">
+                <input class="name davenerWidget" type="text" placeholder="Name" name="nameX" id="nameX"/>
+                <span class="gender davenerWidget">
                     <input id="maleButtonX" type="radio" name="genderX" value="male"></input>
                     <label id="maleLabelX" for="maleButtonX">Male</label>
                     <input id="femaleButtonX" type="radio" name="genderX" value="female"></input>
                     <label id="femaleLabelX" for="femaleButtonX">Female</label>
                 </span>
-                <span class="type">
+                <span class="type davenerWidget">
                     <select name="typeX">
                         <option value="-" id="optionType">Type</option>
                         <option value="member" id="optionMember">Member</option>
@@ -136,7 +135,7 @@
                         <option value="guest" id="optionGuest">Married child / guest</option>
                     </select>
                 </span>
-                <select name="gradeX" class="grade gone">
+                <select name="gradeX" class="grade gone davenerWidget">
                     <option value="-">Grade</option>
                     <option value="gan">Gan</option>
                     <option value="1">1st</option>
@@ -144,7 +143,7 @@
                     <option value="3">3rd</option>
                     <option value="3">4th</option>
                 </select>
-                <span class="days">
+                <span class="days davenerWidget">
                     <input id="roshHaShanahX" type="checkbox" name="roshHaShanahX"></input>
                     <label id="roshHaShanahLabelX" for="roshHaShanahX">Rosh HaShanah</label>
                     <input id="yomKippurX" type="checkbox" name="yomKippurX"></input>
