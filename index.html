@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>
@@ -23,6 +24,7 @@
             .davenerTitle, .nameTitle, .emailTitle {
                 margin-bottom: 0em;
                 font-weight: bold;
+                font-size: small;
             }
 
             #logo {
@@ -89,7 +91,7 @@
     </div>
     <div>
         <h3>Building Fund</h3>
-        <p>The Building Fund total is <strong>3,600&#8362;</strong>. Building Fund payments may be made in installments, with a minimum of 360&#8362; per year. Payment for building fund can be made here.</p>
+        <p>The Building Fund total payment is <strong>3,600&#8362;</strong>. Building Fund payments may be made in installments, with a minimum of 360&#8362; per year. Payment for building fund can be made <a href="https://www.jgive.com/new/en/ils/donation-targets/103156" target="_blank">here</a>.</p>
     </div>
     <div>
         <h3>Seating for the Yamim Noraim</h3>
@@ -141,14 +143,12 @@
             <p class="davenerInput">
                 <input class="name" type="text" placeholder="Name" name="nameX"/>
                 <span class="gender">
-                    <!-- Gender:  -->
                     <input id="maleButtonX" type="radio" name="genderX" value="male"></input>
                     <label id="maleLabelX" for="maleButtonX">Male</label>
                     <input id="femaleButtonX" type="radio" name="genderX" value="female"></input>
                     <label id="femaleLabelX" for="femaleButtonX">Female</label>
                 </span>
                 <span class="type">
-                    <!-- Type:  -->
                     <select name="typeX">
                         <option value="-">Type</option>
                         <option value="member">Member</option>
@@ -159,7 +159,7 @@
                 </span>
                 <input class="age, gone" type="number" placeholder="Age" name="ageX"/>
                 <span class="days">
-                    <input id="roshHashanahX" type="checkbox" name="roshHaShanahX"></input>
+                    <input id="roshHaShanahX" type="checkbox" name="roshHaShanahX"></input>
                     <label id="roshHaShanahLabelX" for="roshHaShanahX">Rosh HaShanah</label>
                     <input id="yomKippurX" type="checkbox" name="yomKippurX"></input>
                     <label id="yomKippurLabelX" for="yomKippurX">Yom Kippur</label>
@@ -175,16 +175,16 @@
         const maxNumDaveners = 20;
         var numDaveners = 0;
         var submitAttempted = false;
+        // Membership question
+        // Grade
+        // iPhone submit
+        // iPhone spacing
         // TODO - calculate total due
-        // TODO - mobile Viewport
         // TODO - email
-        //          TO
+        //          Total
         //          Summary
         // Prevent double-submit
         
-        // TODO - include membership in calculation?
-        // TODO - grade instead of age?
-
         $( document ).ready(function() {
             for (i = 0; i < maxNumDaveners; i++) {
                 $('#numDaveners').append($('<option>', {
@@ -207,8 +207,11 @@
 
         function submit() {
             var data = {};
+            data['Name'] = $('#name').first().val();
+            data['Email'] = $('#email').first().val();
             data['Number of daveners'] = numDaveners;
             for (i = 0; i < numDaveners; i++) {
+                console.log("DAVENER " + i)
                 data['Davener #' + (i+1)] = getDavenerText(i);
             }
             sendEmail("https://public.herotofu.com/v1/4b2f5a60-45d1-11ee-afc4-2f612dbc7441", data, onSuccess, onError);
@@ -217,28 +220,40 @@
 
         function getDavenerText(number) {
             var text = $('input[name="name' + number + '"]').first().val() + "; " +
-                ($('#maleButton' + number).prop("checked") ? "male" : "female") + "; ";
+                ($('#maleButton' + number).prop("checked") ? "Male" : "Female") + "; ";
 
-                const typeInput = davener.find('select[name="type' + number + '"]').first();
-                var type = "-";
-                switch (typeInput.val()) {
-                    case "member":
-                        type = "Member";
-                        break;
-                    case "youngKid":
-                        type = "Child under grade 5";
-                        break;
-                    case "oldKid":
-                        type = "Unmarried child - grade 5+";
-                        break;
-                    case "guest":
-                        type = "Married child / guest";
-                        break;
-                    default:
-                        break;
-                }
+            const typeInput = $('select[name="type' + number + '"]').first();
+            var type = "-";
+            switch (typeInput.val()) {
+                case "member":
+                    type = "Member";
+                    break;
+                case "youngKid":
+                    type = "Child under grade 5 (" + $('input[name="age' + number + '"]').val() + ")";
+                    break;
+                case "oldKid":
+                    type = "Unmarried child - grade 5+";
+                    break;
+                case "guest":
+                    type = "Married child / guest";
+                    break;
+                default:
+                    break;
+            }
 
             text += type + "; ";
+
+            const roshHaShanah = $('#roshHaShanah' + number);
+            const yomKippur = $('#yomKippur' + number);
+            if (roshHaShanah.prop("checked") && yomKippur.prop("checked")) {
+                text += "Both"
+            } else if (roshHaShanah.prop("checked")) {
+                text += "Rosh HaShanah"
+            } else if (yomKippur.prop("checked")) {
+                text += "Yom Kippur"
+            }
+
+            return text;
         }
 
         var onSuccess = function(response) {
