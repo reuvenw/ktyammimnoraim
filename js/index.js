@@ -117,8 +117,8 @@ function submit() {
         data['Davener #' + (i+1)] = getDavenerText(i);
     }
 
-    data["Rosh HaShanah summary"] = seatSummary["rh"]["men"] + " men, " + seatSummary["rh"]["women"] + " woman"
-    data["Yom Kippur summary"] = seatSummary["yk"]["men"] + " men, " + seatSummary["yk"]["women"] + " woman"
+    data["Rosh HaShanah summary"] = seatSummary["rh"]["men"] + " men, " + seatSummary["rh"]["women"] + " women"
+    data["Yom Kippur summary"] = seatSummary["yk"]["men"] + " men, " + seatSummary["yk"]["women"] + " women"
 
     data['Membership due'] = membershipDue + "₪";
     data['Building fund due'] = buildingFundDue + "₪";
