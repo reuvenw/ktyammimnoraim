@@ -75,10 +75,9 @@
 
         <img src="images/logo.png" id="logo">
         <h3 class="heading">
-            2<br/>
             Kapot Temarim<br/>
             HaZiporen 5, Efrat<br/>
-            Elul 5783
+            Elul, 5783
         </h3>
 
         <div>
@@ -149,7 +148,7 @@
         </select>
         
         
-        <p class="numDavenersTitle">Number of daveners</p>
+        <p class="numDavenersTitle">Total number of daveners over the course of the Yammim Noraim</p>
         <select id="numDaveners" name="number">
             <option value="-1">-</option>
         </select>
@@ -225,12 +224,12 @@
         var membershipDue = 0;
         var buildingFundDue = 0;
         var seatsDue = 0;
+        var seatSummary = []
 
         // TODO
-        // Email - Summary
-        // Prevent double-submit
-        // iPhone submit
-        // Get rid of number at top
+        // Contact
+        // Notes
+        // Hebrew
         
         $( document ).ready(function() {
             for (i = 0; i < maxNumDaveners; i++) {
@@ -273,11 +272,20 @@
                     break;
             }
 
+            seatSummary["rh"] = []
+            seatSummary["yk"] = []
+            seatSummary["rh"]["men"] = 0
+            seatSummary["rh"]["women"] = 0
+            seatSummary["yk"]["men"] = 0
+            seatSummary["yk"]["women"] = 0
+
             data['Number of daveners'] = numDaveners;
             for (i = 0; i < numDaveners; i++) {
-                console.log("DAVENER " + i)
                 data['Davener #' + (i+1)] = getDavenerText(i);
             }
+
+            data["Rosh HaShanah summary"] = seatSummary["rh"]["men"] + " men, " + seatSummary["rh"]["women"] + " woman"
+            data["Yom Kippur summary"] = seatSummary["yk"]["men"] + " men, " + seatSummary["yk"]["women"] + " woman"
 
             data['Membership due'] = membershipDue + "₪";
             data['Building fund due'] = buildingFundDue + "₪";
@@ -289,8 +297,9 @@
         }
 
         function getDavenerText(number) {
+            var male = $('#maleButton' + number).prop("checked");
             var text = $('input[name="name' + number + '"]').first().val() + "; " +
-                ($('#maleButton' + number).prop("checked") ? "Male" : "Female") + "; ";
+                (male ? "Male" : "Female") + "; ";
 
             const typeInput = $('select[name="type' + number + '"]').first();
             var type = "-";
@@ -336,10 +345,16 @@
             const roshHaShanah = $('#roshHaShanah' + number);
             const yomKippur = $('#yomKippur' + number);
             if (roshHaShanah.prop("checked") && yomKippur.prop("checked")) {
+                seatSummary["rh"][male ? "men" : "women"] = seatSummary["rh"][male ? "men" : "women"] + 1
+                seatSummary["yk"][male ? "men" : "women"] = seatSummary["yk"][male ? "men" : "women"] + 1
                 text += "Both"
             } else if (roshHaShanah.prop("checked")) {
+                console.log("A: " + seatSummary["rh"][male ? "men" : "women"])
+                seatSummary["rh"][male ? "men" : "women"] = seatSummary["rh"][male ? "men" : "women"] + 1
+                console.log("B: " + seatSummary["rh"][male ? "men" : "women"])
                 text += "Rosh HaShanah"
             } else if (yomKippur.prop("checked")) {
+                seatSummary["yk"][male ? "men" : "women"] = seatSummary["yk"][male ? "men" : "women"] + 1
                 text += "Yom Kippur"
             }
 
@@ -577,9 +592,7 @@
                 }
 
                 $('#due' + i).addClass('gone');
-                console.log(typeInput.val());
                 if (typeInput.val() == "guest") {
-                    console.log("HERE")
                     if (roshHaShanah.prop("checked") && yomKippur.prop("checked")) {
                         seatTotal += seatTwo;
                         $('#dueAmount' + i).html(seatTwo + "&#8362;");
