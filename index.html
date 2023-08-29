@@ -1,159 +1,99 @@
 <!DOCTYPE html>
 <html>
+    <!-- TODO 
+    Logo layout
+    Language layout
+    Back to English
+    500 or 600?
+    Written form attached here
+    Change language after selecting number
+    -->
     <head>
         <title>
             Kapot Temarim Yammim Noraim Seating
         </title>
-        <style>
-            body {
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                margin: 40px;
-            }
-
-            .date {
-                font-size: smaller;
-            }
-
-            h3 {
-                margin-block-end: 0em;
-                color: green;
-            }
-            h3 ~ p:first-of-type, .davenerInput, .name, .email, .totalsTitle ~ p:first-of-type {
-                margin-top: 0.2em;
-            }
-            .davenerTitle, .nameTitle, .emailTitle, .memberTitle, .numDavenersTitle, .totalsTitle {
-                margin-bottom: 0em;
-                font-weight: bold;
-                font-size: small;
-            }
-
-            #logo {
-                /* position: absolute; */
-                /* top: 40px;
-                right: 40px; */
-                left: 0px;
-                padding-right: 1em;
-                height: 4.3em;
-                float: left;
-            }
-            .name, .gender, .type, .grade, .days {
-                margin-right: 1em;
-                margin-bottom: 0.5em;
-                display: inline-block;
-                white-space: nowrap;
-            }
-            #davenerX {
-                visibility: hidden;
-            }
-
-            #submitButton {
-                margin-top: 1em;
-            }
-
-            .gone {
-                display: none;
-            }
-
-            input.error, select.error {
-                border: 1px solid red;
-            }
-
-            label.error {
-                color: red;
-            }
-
-            .due {
-                font-size: smaller;
-                font-weight: bold;
-            }
-
-            #contact {
-                margin-top: 2em;
-                font-size: small;
-            }
-
-        </style>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/styles.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
 
         <img src="images/logo.png" id="logo">
         <h3 class="heading">
-            Kapot Temarim<br/>
-            HaZiporen 5, Efrat<br/>
-            Elul 5783
+            <span id="kapot">Beit Knesset Kapot Temarim</span><br/>
+            <span id="address">HaZiporen 5, Efrat</span><br/>
+            <span id="date">Elul 5783</span>
         </h3>
+        <p id="locale"><a id="en" href="#">English</a> | <a id="he" href="#">עברית</a></p>
 
         <div>
-        <p>Dear Kapot Temarim family,</p>
+        <p id="dear">Dear Kapot Temarim family,</p>
         
-        <p>As we approach another Rosh Hashanah, we wish everyone a year of health, happiness and spiritual growth, as individuals and together as a community. We'd also like to take this opportunity to welcome all those who have recently moved into the neighborhood! We hope that you will find a warm second family within our shul.</p>
+        <p id="intro">As we approach another Rosh Hashanah, we wish everyone a year of health, happiness and spiritual growth, as individuals and together as a community. We'd also like to take this opportunity to welcome all those who have recently moved into the neighborhood! We hope that you will find a warm second family within our shul.</p>
         
-        <p>As we close the year, we ask all current members to take care of any outstanding obligations to the shul (payment for kiddushes or previous dues or fees, etc.) <a href="https://ktefrat.org.il/donate/" target="_blank">here</a>. Thank you!</p>
+        <p><span id="outstanding1">As we close the year, we ask all current members to take care of any outstanding obligations to the shul (payment for kiddushes or previous dues or fees, etc.)</span> <a id="outstanding2" href="https://ktefrat.org.il/donate/" target="_blank">here</a><span id="outstanding3">. Thank you!</span></p>
     </div>
     <div>
-        <h3>Membership</h3>
-        <p>Membership fees are as follows:</p>
+        <h3 id="membership">Membership</h3>
+        <p id="fees">Membership fees are as follows:</p>
         <ul>
-        <li>Building Fund Members: <strong>800&#8362;</strong> (per family)</li>
-        <li>Annual Members: <strong>1,100&#8362;</strong> (per family)</li>
-        <li>Weekday Davening (non-membership): <strong>600&#8362;</strong></li>
+            <li id="membershipFeeFull">Building Fund Members: <strong>800&#8362;</strong> (per family)</li>
+            <li id="membershipFeePartial">Annual Members: <strong>1,100&#8362;</strong> (per family)</li>
+            <li id="membershipFeeWeekday">Weekday Davening (non-membership): <strong>500&#8362;</strong></li>
         </ul>
         
-        <p>All members, new and old should fill out <a href="https://ktefrat.org.il/memberform/" target="_blank">this form</a> if they have not already done so.</p>
+        <p id="infoForm">All members, new and old should fill out <a href="https://ktefrat.org.il/memberform/" target="_blank">this form</a> if they have not already done so.</p>
         
-        <p>We would be thrilled to welcome you as a member of our community. If you have any financial constraints, we encourage you to speak with Rafi Eis (<a href="mailto:rafieis@gmail.com" target="_blank">rafieis@gmail.com</a>) confidentially. </p>
+        <p id="negotiable">We would be thrilled to welcome you as a member of our community. If you have any financial constraints, we encourage you to speak with Rafi Eis (<a href="mailto:rafieis@gmail.com" target="_blank">rafieis@gmail.com</a>) confidentially. </p>
     </div>
     <div>
-        <h3>Building Fund</h3>
-        <p>The Building Fund total payment is <strong>3,600&#8362;</strong>. Building Fund payments may be made in installments, with a minimum of 360&#8362; per year. Payment for building fund can be made <a href="https://www.jgive.com/new/en/ils/donation-targets/103156" target="_blank">here</a>.</p>
+        <h3 id="buildingFundHeader">Building Fund</h3>
+        <p id="buildingFundAmount">The Building Fund total payment is <strong>3,600&#8362;</strong>. Building Fund payments may be made in installments, with a minimum of 360&#8362; per year. Payment for building fund can be made <a href="https://www.jgive.com/new/en/ils/donation-targets/103156" target="_blank">here</a>.</p>
     </div>
     <div>
-        <h3>Seating for the Yammim Noraim</h3>
-        <p>Membership includes seating for immediate family members. Seats for married children, parents, grandparents, and guests are <strong>150&#8362;/seat</strong> for the Yammim Noraim and <strong>100&#8362;/seat</strong> for either Rosh Hashanah or Yom Kippur. Additional seating depends on availability. Seating for children under 5th grade will depend on availability.</p>
+        <h3 id="seating">Seating for the Yammim Noraim</h3>
+        <p id="terms">Membership includes seating for immediate family members. Seats for married children, parents, grandparents, and guests are <strong>150&#8362;/seat</strong> for the Yammim Noraim and <strong>100&#8362;/seat</strong> for either Rosh Hashanah or Yom Kippur. Additional seating depends on availability. Seating for children under 5th grade will depend on availability.</p>
         
-        <p>To reserve seats, please complete the Google form or if you are unable, the written form attached here, by Tuesday, September 5, 2023/19 Elul: </p>
+        <p id="deadline">To reserve seats, please complete the below form or if you are unable, the written form attached here, by Tuesday, September 5, 2023 / 19 Elul.</p>
         
-        <p>Payment for annual dues and extra seating can be made using one of the following methods:</p>
+        <p id="methods">Payment for annual dues and extra seating can be made using one of the following methods:</p>
         <ul>
-        <li><strong>Preferred</strong>: Shul Website (JGive): <a href="https://ktefrat.org.il/donate/" target="_blank">https://ktefrat.org.il/donate/</a></li>
-        <li>Bank Transfer:
-            <br/>
-        Account Name: Beit Knesset Kapot Temarim
-        <br/>Bank: Mizrachi 20
-        <br/>Branch: Alon Shvut 454
-        <br/>Account number: 149924
+        <li id="methodJGive"><strong>Preferred</strong>: Shul Website (JGive): <a href="https://ktefrat.org.il/donate/" target="_blank">https://ktefrat.org.il/donate/</a></li>
+        <li><span id="methodBank">Bank Transfer:</span>
+        <br/><span id="accountName">Account Name: Beit Knesset Kapot Temarim</span>
+        <br/><span id="bankName">Bank: Mizrachi 20</span>
+        <br/><span id="branch">Branch: Alon Shvut 454</span>
+        <br/><span id="accountNumber">Account number: 149924</span>
         </li>
-        <li>Check made out to Kapot Temarim</li>
+        <li id="check">Check made out to Kapot Temarim</li>
         </ul>
     </div>
     <div>
-        <p>Thank you in advance for your prompt attention to this matter. </p>
+        <p id="thanks">Thank you in advance for your prompt attention to this matter. </p>
         
-        <p>Vaad Menahel of Kapot Temarim & the Gabbaim</p>
+        <p id="signature">Vaad Menahel of Kapot Temarim & the Gabbaim</p>
     </div>
 
     <div>
-        <h3>Seating Requests for Yammim Noraim</h3>
+        <h3 id="requests">Seating Requests for Yammim Noraim</h3>
         
-        <p class="nameTitle">Name</p>
+        <p id="nameTitle">Name</p>
         <input id="name" class="name0" type="text" name="name"/>
  
-        <p class="emailTitle">Email</p>
+        <p id="emailTitle">Email</p>
         <input id="email" class="email" type="text" name="email"/>
  
-        <p class="memberTitle">Membership status</p>
+        <p id="memberTitle">Membership status</p>
         <select id="membership" name="membership">
             <option value="-">-</option>
-            <option value="fullMember">Previously paid building fund; paying annual membership</option>
-            <option value="becomingFullMember">Did not yet pay building fund but would like to now, along with annual membership</option>
-            <option value="partialMember">Will pay annual membership this year, not building fund</option>
-            <option value="notAMember">Not yet a member</option>
+            <option value="fullMember" id="fullMember">Previously paid building fund; paying annual membership</option>
+            <option value="becomingFullMember" id="becomingFullMember">Did not yet pay building fund but would like to now, along with annual membership</option>
+            <option value="partialMember" id="partialMember">Will pay annual membership this year, not building fund</option>
+            <option value="notAMember" id="notAMember">Not yet a member</option>
         </select>
         
         
-        <p class="numDavenersTitle">Total number of daveners over the course of the Yammim Noraim</p>
+        <p id="numDavenersTitle">Total number of daveners over the course of the Yammim Noraim</p>
         <select id="numDaveners" name="number">
             <option value="-1">-</option>
         </select>
@@ -162,22 +102,27 @@
 
         </div>
         <div id="summary" class="gone">
-            <h3>Total amounts due</h3>
-            <p>Please pay each sum at the appropriate link.</p>
+            <h3 id="totalsDue">Total amounts due</h3>
+            <p id="eachLink">Please pay each sum at the appropriate link.</p>
             <ul>
-                <li><a href="https://www.jgive.com/new/en/ils/donation-targets/103157" target="_blank">Membership</a>: <span id="membershipDue">0</span>&#8362;</li>
-                <li><a href="https://www.jgive.com/new/en/ils/donation-targets/103156" target="_blank">Building fund</a>: <span id="buildingFundDue">0</span>&#8362;</li>
-                <li><a href="https://www.jgive.com/new/en/ils/collect/donation-targets/103135/amount" target="_blank">Seats</a>: <span id="seatsDue">0</span>&#8362;</li>
+                <li><a href="https://www.jgive.com/new/en/ils/donation-targets/103157" target="_blank" id="membershipDueLabel">Membership</a>: <span id="membershipDue">0</span>&#8362;</li>
+                <li><a href="https://www.jgive.com/new/en/ils/donation-targets/103156" target="_blank" id="buildingFundDueLabel">Building fund</a>: <span id="buildingFundDue">0</span>&#8362;</li>
+                <li><a href="https://www.jgive.com/new/en/ils/collect/donation-targets/103135/amount" target="_blank" id="seatsDueLabel">Seats</a>: <span id="seatsDue">0</span>&#8362;</li>
             </ul>
             <button id="submitButton" type="submit">Submit</button>
         </div>
         <div id="contact">
             Please contact <a href="mailto:ktefrat@gmail.com" target="_blank">ktefrat@gmail.com</a> with any questions or comments.
         </div>
+
+
+
+
+
         <div id="davenerX">
-            <p class="davenerTitle">Davener X</p>
+            <p id="davenerTitle"><span id="davenerTitleStart">Davener #</span><span id="davenerNumber">X</span></p>
             <p class="davenerInput">
-                <input class="name" type="text" placeholder="Name" name="nameX"/>
+                <input class="name" type="text" placeholder="Name" name="nameX" id="nameX"/>
                 <span class="gender">
                     <input id="maleButtonX" type="radio" name="genderX" value="male"></input>
                     <label id="maleLabelX" for="maleButtonX">Male</label>
@@ -186,11 +131,11 @@
                 </span>
                 <span class="type">
                     <select name="typeX">
-                        <option value="-">Type</option>
-                        <option value="member">Member</option>
-                        <option value="youngKid">Child under grade 5</option>
-                        <option value="oldKid">Child - grade 5+</option>
-                        <option value="guest">Married child / guest</option>
+                        <option value="-" id="optionType">Type</option>
+                        <option value="member" id="optionMember">Member</option>
+                        <option value="youngKid" id="optionYoungKid">Child under grade 5</option>
+                        <option value="oldKid" id="optionOldKid">Child - grade 5+</option>
+                        <option value="guest" id="optionGuest">Married child / guest</option>
                     </select>
                 </span>
                 <select name="gradeX" class="grade gone">
@@ -208,7 +153,7 @@
                     <label id="yomKippurLabelX" for="yomKippurX">Yom Kippur</label>
                 </span>
                 <span id="dueX" class="gone due">
-                    Due:
+                    <span id="due">Due:</span>
                     <span id="dueAmountX"></span>
                 </span>
             </p>
@@ -217,431 +162,6 @@
     </body>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
-
-        const maxNumDaveners = 20;
-        var numDaveners = 0;
-        var submitAttempted = false;
-
-        const membershipFull = 800;
-        const membershipPartial = 1100;
-        const buildingFund = 3600;
-        const seatOne = 100;
-        const seatTwo = 150;
-
-        var membershipDue = 0;
-        var buildingFundDue = 0;
-        var seatsDue = 0;
-        var seatSummary = []
-
-        // TODO
-        // Hebrew
-        
-        $( document ).ready(function() {
-            for (i = 0; i < maxNumDaveners; i++) {
-                $('#numDaveners').append($('<option>', {
-                    value: i + 1,
-                    text: i + 1
-                }));
-            }
-
-            $('#numDaveners').on('change', function() {
-                updateDaveners(this.value);
-                validate();
-            });
-
-            $('#submitButton').on('click', function() {
-                submitAttempted = true;
-                if (validate()) {
-                    submit();
-                }
-            });
-        });
-
-        function submit() {
-            var data = {};
-            data['Name'] = $('#name').first().val();
-            data['Email'] = $('#email').first().val();
-
-            switch ($('#membership').val()) {
-                case "fullMember":
-                    data['Membership'] = "Previously paid building fund; paying annual membership";
-                    break;
-                case "becomingFullMember":
-                    data['Membership'] = "Did not yet pay building fund but would like to now, along with annual membership";
-                    break;
-                case "partialMember":
-                    data['Membership'] = "Will pay annual membership this year, not building fund";
-                    break;
-                case "notAMember":
-                    data['Membership'] = "Not yet a member";
-                    break;
-            }
-
-            seatSummary["rh"] = []
-            seatSummary["yk"] = []
-            seatSummary["rh"]["men"] = 0
-            seatSummary["rh"]["women"] = 0
-            seatSummary["yk"]["men"] = 0
-            seatSummary["yk"]["women"] = 0
-
-            data['Number of daveners'] = numDaveners;
-            for (i = 0; i < numDaveners; i++) {
-                data['Davener #' + (i+1)] = getDavenerText(i);
-            }
-
-            data["Rosh HaShanah summary"] = seatSummary["rh"]["men"] + " men, " + seatSummary["rh"]["women"] + " woman"
-            data["Yom Kippur summary"] = seatSummary["yk"]["men"] + " men, " + seatSummary["yk"]["women"] + " woman"
-
-            data['Membership due'] = membershipDue + "₪";
-            data['Building fund due'] = buildingFundDue + "₪";
-            data['Seats due'] = seatsDue + "₪";
-            data['Total due'] = (membershipDue + buildingFundDue + seatsDue) + "₪";
-            
-            sendEmail("https://public.herotofu.com/v1/4b2f5a60-45d1-11ee-afc4-2f612dbc7441", data, onSuccess, onError);
-
-        }
-
-        function getDavenerText(number) {
-            var male = $('#maleButton' + number).prop("checked");
-            var text = $('input[name="name' + number + '"]').first().val() + "; " +
-                (male ? "Male" : "Female") + "; ";
-
-            const typeInput = $('select[name="type' + number + '"]').first();
-            var type = "-";
-            switch (typeInput.val()) {
-                case "member":
-                    type = "Member";
-                    break;
-                case "youngKid":
-                    type = "Child under grade 5 (";
-                    
-                    switch ($('select[name="grade' + number + '"]').val()) {
-                        case "gan":
-                            type += "Gan";
-                            break;
-                        case "1":
-                            type += "1st";
-                            break;
-                        case "2":
-                            type += "2nd";
-                            break;
-                        case "3":
-                            type += "3rd";
-                            break;
-                        case "4":
-                            type += "4th";
-                            break;
-                    }
-                    
-                    type += ")";
-                    break;
-                case "oldKid":
-                    type = "Child - grade 5+";
-                    break;
-                case "guest":
-                    type = "Married child / guest";
-                    break;
-                default:
-                    break;
-            }
-
-            text += type + "; ";
-
-            const roshHaShanah = $('#roshHaShanah' + number);
-            const yomKippur = $('#yomKippur' + number);
-            if (roshHaShanah.prop("checked") && yomKippur.prop("checked")) {
-                seatSummary["rh"][male ? "men" : "women"] = seatSummary["rh"][male ? "men" : "women"] + 1
-                seatSummary["yk"][male ? "men" : "women"] = seatSummary["yk"][male ? "men" : "women"] + 1
-                text += "Both"
-            } else if (roshHaShanah.prop("checked")) {
-                console.log("A: " + seatSummary["rh"][male ? "men" : "women"])
-                seatSummary["rh"][male ? "men" : "women"] = seatSummary["rh"][male ? "men" : "women"] + 1
-                console.log("B: " + seatSummary["rh"][male ? "men" : "women"])
-                text += "Rosh HaShanah"
-            } else if (yomKippur.prop("checked")) {
-                seatSummary["yk"][male ? "men" : "women"] = seatSummary["yk"][male ? "men" : "women"] + 1
-                text += "Yom Kippur"
-            }
-
-            return text;
-        }
-
-        var onSuccess = function(response) {
-            alert("Form successfully submitted!\nIf you have not already done so, please visit the JGive links to complete your reservation by paying any amounts due.");
-            console.log(response);
-        };
-
-        var onError = function(err) {
-            alert("Error submitting form");
-            $("#submitButton"). attr("disabled", false);
-            console.error(err);
-        };
-
-        function sendEmail(endpointUrl, data, onSuccess, onError) {
-            $("#submitButton"). attr("disabled", true);
-            $.ajax({
-                type: "POST",
-                url: endpointUrl,
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: onSuccess,
-                error: function(xhr, status) {
-                    if (typeof this.statusCode[xhr.status] !== 'undefined') {
-                        return false;
-                    }
-
-                    onError(err);
-                },
-                statusCode: {
-                    // Endpoint thinks that it's likely a spam/bot request, you need to change "spam protection mode" to "never" in HeroTofu forms
-                    422: function(response) {
-                    alert("Cannot send request, are you robot?");
-                    },
-                }
-            });
-        }
-
-        function updateDaveners(newValue) {
-            const oldNumDaveners = parseInt(numDaveners);
-            const newNumDaveners = parseInt(newValue);
-            numDaveners = newNumDaveners;
-            
-            if (newNumDaveners > oldNumDaveners) {
-                for (i = oldNumDaveners; i < newNumDaveners; i++) {
-                    const davenerX = $('#davenerX').clone();
-                    adjustIdsAndNames(davenerX, i);
-                    davenerX.appendTo('#daveners');
-                }
-            } else if (newNumDaveners < oldNumDaveners) {
-                for (i = oldNumDaveners - 1; i >= newNumDaveners; i--) {
-                    $('#davener' + i).remove();
-                }
-            }
-
-            if (newNumDaveners > 0) {
-                $('#summary').removeClass('gone');
-            } else {
-                $('#summary').addClass('gone');
-            }
-        }
-
-        function adjustIdsAndNames(davener, number) {
-            davener.find('p')[0].innerText = "Davener " + (parseInt(number) + 1);
-
-            $('#name').on('change', function() {
-                validate();
-            });
-
-            $('#email').on('change', function() {
-                validate();
-            });
-
-            $('#membership').on('change', function() {
-                validate();
-            });
-
-            $('#numDaveners').on('change', function() {
-                validate();
-            });
-
-            davener.find('input[name="nameX"]').on('change', function() {
-                validate();
-            });
-
-            davener.find('#maleButtonX').on('change', function() {
-                validate();
-            });
-
-            davener.find('#femaleButtonX').on('change', function() {
-                validate();
-            });
-
-            davener.find('select[name="typeX"]').on('change', function() {
-                validate();
-            });
-
-            davener.find('select[name="gradeX"]').on('change', function() {
-                validate();
-            });
-
-            davener.find('#roshHaShanahX').on('change', function() {
-                validate();
-            });
-
-            davener.find('#yomKippurX').on('change', function() {
-                validate();
-            });
-
-            davener.attr('id', 'davener' + number);
-            davener.find('input[name="nameX"]').attr('name', 'name' + number);
-            davener.find('input[name="genderX"]').attr('name', 'gender' + number);
-            davener.find('#maleLabelX').attr('for', 'maleButton' + number);
-            davener.find('#femaleLabelX').attr('for', 'femaleButton' + number);
-            davener.find('#maleButtonX').attr('id', 'maleButton' + number);
-            davener.find('#maleLabelX').attr('id', 'maleLabel' + number);
-            davener.find('#femaleButtonX').attr('id', 'femaleButton' + number);
-            davener.find('#femaleLabelX').attr('id', 'femaleLabel' + number);
-            davener.find('select[name="typeX"]').attr('name', 'type' + number);
-            davener.find('select[name="gradeX"]').attr('name', 'grade' + number);
-            davener.find('input[name="roshHaShanahX"]').attr('name', 'roshHaShanah' + number);
-            davener.find('input[name="yomKippurX"]').attr('name', 'yomKippur' + number);
-            davener.find('#roshHaShanahX').attr('id', 'roshHaShanah' + number);
-            davener.find('#yomKippurX').attr('id', 'yomKippur' + number);
-            davener.find('#roshHaShanahLabelX').attr('for', 'roshHaShanah' + number);
-            davener.find('#yomKippurLabelX').attr('for', 'yomKippur' + number);
-            davener.find('#roshHaShanahLabelX').attr('id', 'roshHaShanahLabel' + number);
-            davener.find('#yomKippurLabelX').attr('id', 'yomKippurLabel' + number);
-            davener.find('#dueX').attr('id', 'due' + number);
-            davener.find('#dueAmountX').attr('id', 'dueAmount' + number);
-        }
-
-        function validate() {
-            var valid = true;
-
-            const nameInput0 = $('#name').first();
-            if (!nameInput0.val().trim()) {
-                valid = false;
-                if (submitAttempted) {
-                    nameInput0.addClass('error');
-                }
-            } else {
-                nameInput0.removeClass('error');
-            }
-
-            const emailInput = $('#email').first();
-            if (!emailInput.val().trim()) {
-                valid = false;
-                if (submitAttempted) {
-                    emailInput.addClass('error');
-                }
-            } else {
-                emailInput.removeClass('error');
-            }
-
-            const membershipInput = $('#membership').first();
-            if (membershipInput.val() == "-") {
-                valid = false;
-                if (submitAttempted) {
-                    membershipInput.addClass('error');
-                }
-            } else {
-                membershipInput.removeClass('error');
-            }
-
-            var seatTotal = 0;
-
-            for (i = 0; i < numDaveners; i++) {
-                const davener = $('#davener' + i);
-
-                const nameInput = davener.find('input[name="name' + i + '"]').first();
-                if (!nameInput.val().trim()) {
-                    valid = false;
-                    if (submitAttempted) {
-                        nameInput.addClass('error');
-                    }
-                } else {
-                    nameInput.removeClass('error');
-                }
-
-                const male = davener.find('#maleButton' + i);
-                const female = davener.find('#femaleButton' + i);
-                if (!male.prop("checked") && !female.prop("checked")) {
-                    valid = false;
-                    if (submitAttempted) {
-                        davener.find('#maleLabel' + i).addClass('error');
-                        davener.find('#femaleLabel' + i).addClass('error');
-                    }
-                } else {
-                    davener.find('#maleLabel' + i).removeClass('error');
-                    davener.find('#femaleLabel' + i).removeClass('error');
-                }
-
-                const typeInput = davener.find('select[name="type' + i + '"]').first();
-                if (typeInput.val() == "-") {
-                    valid = false;
-                    if (submitAttempted) {
-                        typeInput.addClass('error');
-                    }
-                } else {
-                    typeInput.removeClass('error');
-                }
-
-                const gradeInput = davener.find('select[name="grade' + i + '"]');
-                if (typeInput.val() == "youngKid") {
-                    gradeInput.removeClass('gone');                    
-                    if (gradeInput.val() == "-") {
-                        valid = false;
-                        if (submitAttempted) {
-                            gradeInput.addClass('error');
-                        }
-                    } else {
-                        gradeInput.removeClass('error');
-                    }
-
-                } else {
-                    gradeInput.addClass('gone');
-                }
-
-                const roshHaShanah = davener.find('#roshHaShanah' + i);
-                const yomKippur = davener.find('#yomKippur' + i);
-                if (!roshHaShanah.prop("checked") && !yomKippur.prop("checked")) {
-                    valid = false;
-                    if (submitAttempted) {
-                        davener.find('#roshHaShanahLabel' + i).addClass('error');
-                        davener.find('#yomKippurLabel' + i).addClass('error');
-                    }
-                } else {
-                    davener.find('#roshHaShanahLabel' + i).removeClass('error');
-                    davener.find('#yomKippurLabel' + i).removeClass('error');
-                }
-
-                $('#due' + i).addClass('gone');
-                if (typeInput.val() == "guest") {
-                    if (roshHaShanah.prop("checked") && yomKippur.prop("checked")) {
-                        seatTotal += seatTwo;
-                        $('#dueAmount' + i).html(seatTwo + "&#8362;");
-                        $('#due' + i).removeClass('gone');
-                    } else if (roshHaShanah.prop("checked") || yomKippur.prop("checked")) {
-                        seatTotal += seatOne;
-                        $('#dueAmount' + i).html(seatOne + "&#8362;");
-                        $('#due' + i).removeClass('gone');
-                    }
-                }
-
-            }
-
-            switch (membershipInput.val()) {
-                case "fullMember":
-                case "becomingFullMember":
-                    membershipDue = membershipFull;
-                    break;
-                case "partialMember":
-                    membershipDue = membershipPartial;
-                    break;
-                default:
-                    membershipDue = 0;
-                    break;
-            }
-            switch (membershipInput.val()) {
-                case "becomingFullMember":
-                    buildingFundDue = buildingFund;
-                    break;
-                default:
-                    buildingFundDue = 0;
-                    break;
-            }
-            seatsDue = seatTotal;
-            
-            $('#membershipDue').text(membershipDue);
-            $('#buildingFundDue').text(buildingFundDue);
-            $('#seatsDue').text(seatTotal);
-
-
-            return valid;
-        }
-
-    </script>
-
+    <script src="js/localization.js"></script>
+    <script src="js/index.js"></script>
 </html>
