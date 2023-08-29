@@ -38,6 +38,8 @@
             }
             .name, .gender, .type, .grade, .days {
                 margin-right: 1em;
+                margin-bottom: 0.5em;
+                display: inline-block;
                 white-space: nowrap;
             }
             #davenerX {
@@ -219,11 +221,13 @@
         const buildingFund = 3600;
         const seatOne = 100;
         const seatTwo = 150;
+
+        var membershipDue = 0;
+        var buildingFundDue = 0;
+        var seatsDue = 0;
+
         // TODO
-        // Calculate totals due
-        // Email
-        //          Summary
-        //          Total
+        // Email - Summary
         // Prevent double-submit
         // iPhone submit
         // iPhone spacing
@@ -239,6 +243,7 @@
 
             $('#numDaveners').on('change', function() {
                 updateDaveners(this.value);
+                validate();
             });
 
             $('#submitButton').on('click', function() {
@@ -274,6 +279,12 @@
                 console.log("DAVENER " + i)
                 data['Davener #' + (i+1)] = getDavenerText(i);
             }
+
+            data['Membership due'] = membershipDue + "₪";
+            data['Building fund due'] = buildingFundDue + "₪";
+            data['Seats due'] = seatsDue + "₪";
+            data['Total due'] = (membershipDue + buildingFundDue + seatsDue) + "₪";
+            
             sendEmail("https://public.herotofu.com/v1/4b2f5a60-45d1-11ee-afc4-2f612dbc7441", data, onSuccess, onError);
 
         }
@@ -584,23 +595,27 @@
             switch (membershipInput.val()) {
                 case "fullMember":
                 case "becomingFullMember":
-                    $('#membershipDue').text(membershipFull);
+                    membershipDue = membershipFull;
                     break;
                 case "partialMember":
-                    $('#membershipDue').text(membershipPartial);
+                    membershipDue = membershipPartial;
                     break;
                 default:
-                    $('#membershipDue').text(0);
+                    membershipDue = 0;
                     break;
             }
             switch (membershipInput.val()) {
                 case "becomingFullMember":
-                    $('#buildingFundDue').text(buildingFund);
+                    buildingFundDue = buildingFund;
                     break;
                 default:
-                    $('#buildingFundDue').text(0);
+                    buildingFundDue = 0;
                     break;
             }
+            seatsDue = seatTotal;
+            
+            $('#membershipDue').text(membershipDue);
+            $('#buildingFundDue').text(buildingFundDue);
             $('#seatsDue').text(seatTotal);
 
 
