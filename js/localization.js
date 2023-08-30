@@ -10,7 +10,7 @@ hebrew["intro"] = 'לקראת ראש השנה הבא עלינו לטובה, אנ
 hebrew["outstanding"] = 'עם סגירת השנה, אנו מבקשים מכל החברים הנוכחיים לדאוג לכל התחייבות לבית הכנסת (תשלום עבור קידוש או אגרות או אגרות קודמים וכו׳) באמצעות <a href="https://ktefrat.org.il/donate/" target="_blank">קישור זה</a>. תודה!'
 hebrew["membershipTitle"] = "חֲבֵרוּת"
 hebrew["fees"] = "דמי חברות הן כדלקמן:"
-hebrew["membershipFeeFull"] = "חברי קרן בנייה: <strong>800&#8362;</strong> (למשפחה)"
+hebrew["membershipFeeFull"] = "חברי קרן בנין: <strong>800&#8362;</strong> (למשפחה)"
 hebrew["membershipFeePartial"] = "חברים שנתיים: <strong>1,100&#8362;</strong> (למשפחה)"
 hebrew["membershipFeeWeekday"] = "תפילות ימי חול (ללא חברות): <strong>500&#8362;</strong>"
 hebrew["infoForm"] = 'כל החברים, החדשים והוותיקים מתבקשים למלא <a href="https://ktefrat.org.il/memberform/" target="_blank">טופס זה</a> אם טרם עשו זאת.'
